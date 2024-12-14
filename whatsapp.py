@@ -3,15 +3,28 @@
 #testing date: September 7, 2021
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
-import time
 
-driver = webdriver.Chrome(ChromeDriverManager().install())
+from selenium.webdriver.common.by import By
+
+
+import os
+import time
+service = ChromeService((ChromeDriverManager().install()))
+options = webdriver.ChromeOptions()
+options.add_argument('--profile-directory=Profile NUM_HERE') #You can find the dir in chrome://version/
+options.add_argument("--user-data-dir=enter user data here") #e.g. C:\Users\You\AppData\Local\Google\Chrome\User Data
+try:
+    driver = webdriver.Chrome(service=service,options=options)
+except:
+    os.system("taskkill /im chrome.exe /f")
+    driver = webdriver.Chrome(service=service,options=options)
 driver.get('https://web.whatsapp.com/')
 
 #Chrome opens
 #Scan the QR code
-
 print("\n\nPlease MAXIMIZE the WhatsApp window before proceeding...")
 print("\n\nPlease ignore all warnings and enter name of user or group...\n\n")
 
@@ -22,27 +35,36 @@ gap = float(input('Interval (in seconds) between messages: '))
 bot_prompt = input('Do you want to add bot prompt to your message? (Y/N) ').upper()
 
 input('Enter anything after scanning QR code...')
+try:
+    user = driver.find_element(by=By.XPATH,value='//span[@title = "{}"]'.format(name))
+    user.click()
 
-user = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name))
-user.click()
+    #Entered the chat
 
-#Entered the chat
+    msg_box = driver.find_element(by=By.XPATH,value='//div[@data-tab = "10"]')    #updated from last version: @data-tab = "10"   #May require further updates based on Chrome version.
 
-msg_box = driver.find_element_by_xpath('//div[@data-tab = "9"]')    #updated from last version: @data-tab = "1"   #May require further updates based on Chrome version.
+    for i in range(count):
+        if bot_prompt == 'Y':
+            msg_final = '<Status: ' + str(i+1) + '/' + str(count) + '>' + msg
+        else:
+            msg_final = msg
+        msg_box.send_keys(msg_final)
+        button = driver.find_element(by=By.XPATH,value="//span[@data-icon='send']")          
+        button.click()
+        if gap > 0:
+            time.sleep(gap)
 
-for i in range(count):
-    if bot_prompt == 'Y':
-        msg_final = '<Status: ' + str(i+1) + '/' + str(count) + '>' + msg
+    msg_final = 'Spaming Complete!'
     msg_box.send_keys(msg_final)
-    button = driver.find_element_by_class_name('_4sWnG')            #updated from last version: _35EW6      #May require further updates based on Chrome version.
+    button = driver.find_element(by=By.XPATH,value="//span[@data-icon='send']")
+                  
     button.click()
-    if gap > 0:
-        time.sleep(gap)
 
-msg_final = 'Hacking Complete!'
-msg_box.send_keys(msg_final)
-button = driver.find_element_by_class_name('_4sWnG')                #updated from last version: _35EW6      #May require further updates based on Chrome version.
-button.click()
+    time.sleep(30)#update: gives time for messages to be sent before closing the window
+except:
+    driver.quit()
+try:
+    driver.quit()
+except:
+    print("Already closed::ERROR")
 
-time.sleep(30)              #update: gives time for messages to be sent before closing the window
-driver.close()
