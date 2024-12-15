@@ -1,5 +1,5 @@
 # WhatsApp-Spam-Bot
-Python code for a WhatsApp spam bot: https://github.com/Akshayjyoti/WhatsApp-Spam-Bot/blob/main/whatsapp.py <br/>
+Python code for a WhatsApp spam bot: https://github.com/LevGilboa/WhatsApp-Spam-Bot/blob/main/whatsapp.py <br/>
 Version 1.0 <br/>
 Testing date: December 14, 2024 <br/> <br/>
 Requirements:
