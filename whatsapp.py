@@ -1,6 +1,6 @@
-#program by Akshayjyoti Bordoloi
-#version 2.01
-#testing date: September 7, 2021
+#program by LevGilboa
+#version 1.01
+#testing date: December , 14 , 2024
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
