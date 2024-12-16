@@ -4,7 +4,7 @@ Version 1.0 <br/>
 Testing date: December 14, 2024 <br/> <br/>
 Requirements:<br/>
 Python 3.11<br/>
-pip<br/><br/>
+pip<br/>
 
 Installation:<br/>
 1.Open cmd<br/>
